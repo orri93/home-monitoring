@@ -6,4 +6,9 @@ services:
       - "61616:61616"
       - "8161:8161"
     volumes:
+      - ./activemq.xml:/opt/apache-activemq/conf/activemq.xml
+      - ./credentials.properties:/opt/apache-activemq/conf/credentials.properties
+      - ./groups.properties:/opt/apache-activemq/conf/groups.properties
       - ./jetty.xml:/opt/apache-activemq/conf/jetty.xml
+      - ./users.properties:/opt/apache-activemq/conf/users.properties
+      - ./camel.xml:/opt/apache-activemq/conf/camel.xml
