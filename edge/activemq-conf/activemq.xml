@@ -116,7 +116,9 @@
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
         </shutdownHooks>
 
-    </broker>
+    <plugins> <simpleAuthenticationPlugin> <users> <authenticationUser username="${activemq.username}" password="${activemq.password}"/> </users> </simpleAuthenticationPlugin> </plugins> <managementContext> <managementContext createConnector="true" /> </managementContext> </broker>  
+
+    <import resource="camel.xml"/>
 
     <!--
         Enable web consoles, REST and Ajax APIs and demos
