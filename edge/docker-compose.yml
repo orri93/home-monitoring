@@ -1,4 +1,4 @@
-name: home-monitoring
+#name: home-monitoring
 
 services:
 
@@ -30,6 +30,7 @@ services:
       - ./activemq-conf/jetty-realm.properties:/opt/apache-activemq/conf/jetty-realm.properties
       - ./activemq-lib/postgresql-42.2.14.jar:/opt/apache-activemq/lib/postgresql-42.2.14.jar
       - ./activemq-lib/camel/camel-sql-2.25.4.jar:/opt/apache-activemq/lib/camel/camel-sql-2.25.4.jar
+      - ./activemq-lib/optional/spring-jdbc-5.3.39.jar:/opt/apache-activemq/lib/optional/spring-jdbc-5.3.39.jar
       - activemq-data:/opt/apache-activemq/data
     depends_on:
       - db

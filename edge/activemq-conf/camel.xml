@@ -75,7 +75,7 @@
         <route>
             <from uri="activemq:queue:iam.indambmon1.humidity"/>
             <log id="route-log" message=">>> ${body} testing message in body"/>
-            <to uri="sql:INSERT INTO msg (ts, id, body) VALUES (now(), :#${header.record_id}, :#${header.record_text})?dataSource=#postgres"/>
+            <to uri="sql:INSERT INTO msg (ts, id, body) VALUES (now(), :#${header.record_id}, :#${header.record_text})?dataSource=#postgres-ds"/>
         </route>
 
        <!-- <route><from uri="activemq:queue:iam.indambmon1.humidity"/><to uri="sql:INSERT INTO iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'humidity', ${body})?dataSource=#postgres-ds"/></route> -->
