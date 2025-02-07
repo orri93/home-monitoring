@@ -39,7 +39,7 @@
        http://camel.apache.org/components.html
     -->
     <bean id="postgres-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
-        <property name="serverName" value="localhost" />
+        <property name="serverName" value="db" />
         <property name="databaseName" value="activemq" />
         <property name="portNumber" value="5432" />
         <property name="user" value="activemq" />
@@ -73,7 +73,7 @@
         <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
 
         <route>
-            <from uri="activemq:queue:iam.indambmon1.humidity"/>
+            <from uri="activemq:queue:iam.indambmon1.pressure"/>
             <log id="route-log" message=">>> ${body} testing message in body"/>
             <to uri="sql:INSERT INTO msg (ts, id, body) VALUES (now(), :#${header.record_id}, :#${header.record_text})?dataSource=#postgres-ds"/>
         </route>
