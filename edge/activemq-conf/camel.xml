@@ -80,7 +80,7 @@
         </route>
         -->
 
-       <route><from uri="activemq:queue:iam.indambmon1.temperature"/><to uri="sql:INSERT INTO activemq.iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'temperature', ${body})?dataSource=#postgres-ds"/></route>
+       <route><from uri="activemq:queue:iam.indambmon1.temperature"/><to uri="sql:INSERT INTO activemq.iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'temperature', :#${body})?dataSource=#postgres-ds"/></route>
 
        <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
