@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS iam (
-  ts TIMESTAMP,
-  device VARCHAR(16),
-  measurement VARCHAR(16),
-  value NUMERIC(6, 1)
+  ts TIMESTAMP NOT NULL,
+  device VARCHAR(16) NOT NULL,
+  measurement VARCHAR(16) NOT NULL,
+  value NUMERIC(6, 1) NOT NULL
 );
