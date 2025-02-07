@@ -4,3 +4,9 @@ CREATE TABLE IF NOT EXISTS iam (
   measurement VARCHAR(16) NOT NULL,
   value NUMERIC(6, 1) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS msg (
+  ts TIMESTAMP NOT NULL,
+  id text,
+  body text
+);

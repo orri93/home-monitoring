@@ -66,13 +66,19 @@
             <description>Example Camel Route</description>
             <from uri="activemq:topic:testing"/>
             <to uri="activemq:queue:testing"/>
-       </route>
+        </route>
 
-       <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.indambmon1.humidity"/></route>
-       <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.indambmon1.pressure"/></route>
-       <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
+        <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.indambmon1.humidity"/></route>
+        <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.indambmon1.pressure"/></route>
+        <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
 
-       <route><from uri="activemq:queue:iam.indambmon1.humidity"/><to uri="sql:INSERT INTO iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'humidity', ${body})?dataSource=#postgres-ds"/></route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.humidity"/>
+            <log id="route-log" message=">>> ${body} testing message in body"/>
+            <to uri="sql:INSERT INTO msg (ts, id, body) VALUES (now(), :#${header.record_id}, :#${header.record_text})?dataSource=#postgres"/>
+        </route>
+
+       <!-- <route><from uri="activemq:queue:iam.indambmon1.humidity"/><to uri="sql:INSERT INTO iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'humidity', ${body})?dataSource=#postgres-ds"/></route> -->
 
        <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
