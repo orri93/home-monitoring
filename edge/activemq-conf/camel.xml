@@ -69,7 +69,9 @@
             <to uri="activemq:queue:testing"/>
        </route>
 
-       <route><from uri="activemq:topic:testtopic.LVMQTT"/><to uri="activemq:queue:testqueue.LVMQTT"/></route>
+       <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.indambmon1.humidity"/></route>
+       <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.indambmon1.pressure"/></route>
+       <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
 
        <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
