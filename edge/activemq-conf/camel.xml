@@ -59,7 +59,6 @@
         </property>
     </bean>
 
-
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
         <!-- You can use Spring XML syntax to define the routes here using the <route> element -->
