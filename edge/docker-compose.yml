@@ -54,7 +54,8 @@ services:
       - "3000:3000"
     networks:
       - home-monitoring-net
-#   volumes:
+    volumes:
+      - grafana_data:/var/lib/grafana
 #     - ./grafana-conf:/etc/grafana/provisioning
     depends_on:
       - db
@@ -63,6 +64,7 @@ volumes:
   db-data:
   activemq-data:
   node-red-data:
+  grafana_data:
 
 networks:
   home-monitoring-net:
