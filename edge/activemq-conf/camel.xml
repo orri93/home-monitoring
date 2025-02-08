@@ -80,19 +80,32 @@
         </route>
         -->
 
-       <route><from uri="activemq:queue:iam.indambmon1.temperature"/><to uri="sql:INSERT INTO activemq.iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'temperature', :#${body})?dataSource=#postgres-ds"/></route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.temperature"/>
+            <process>
+                <simple>
+                    <setBody>
+                        <simple>${bodyAs(java.lang.String)}</simple>
+                    </setBody>
+                    <setBody>
+                        <simple>${bodyAs(java.math.BigDecimal)}</simple>
+                    </setBody>
+                </simple>
+            </process>
+            <to uri="sql:INSERT INTO iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'temperature', :#${body})?dataSource=#postgres-ds"/>
+        </route>
 
-       <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
+        <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
-       <!-- route>
-         <from uri="jetty:http://0.0.0.0:8080/jdbcWeb"/>
-         <when>
-           <simple>${headers.CamelHttpMethod} == "GET"</simple>
-             <setBody>
-               <constant>SELECT * FROM post_data</constant>
-             </setBody>
-             <to uri="jdbc:postgres-ds"/>
-         </when>
+        <!-- route>
+            <from uri="jetty:http://0.0.0.0:8080/jdbcWeb"/>
+            <when>
+                <simple>${headers.CamelHttpMethod} == "GET"</simple>
+                <setBody>
+                    <constant>SELECT * FROM post_data</constant>
+                </setBody>
+                <to uri="jdbc:postgres-ds"/>
+            </when>
        </route -->
 
     </camelContext>
