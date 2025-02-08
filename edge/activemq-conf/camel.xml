@@ -73,7 +73,8 @@
         <route>
             <from uri="activemq:queue:iam.indambmon1.pressure"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'pressure', ${body})</simple></setBody>
-            <to uri="jdbc:postgres-ds"/>
+	    <to uri="jdbc:postgres-ds"/>
+	</route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.temperature"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
