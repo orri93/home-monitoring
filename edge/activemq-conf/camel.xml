@@ -61,25 +61,19 @@
 
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
-        <!-- You can use Spring XML syntax to define the routes here using the <route> element -->
-        <route>
-            <description>Example Camel Route</description>
-            <from uri="activemq:topic:testing"/>
-            <to uri="activemq:queue:testing"/>
-        </route>
-
+        <!-- Routes for the Indoor Ambient Monitoring Device #1 -->
         <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.indambmon1.humidity"/></route>
         <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.indambmon1.pressure"/></route>
         <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
-
-        <!--
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.humidity"/>
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'humidity', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.pressure"/>
-            <log id="route-log" message=">>> ${body} testing message in body"/>
-            <to uri="sql:INSERT INTO msg (ts, id, body) VALUES (now(), :#${header.record_id}, :#${header.record_text})?dataSource=#postgres-ds"/>
-        </route>
-        -->
-
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'pressure', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
         <route>
             <from uri="activemq:queue:iam.indambmon1.temperature"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
