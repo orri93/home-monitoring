@@ -82,17 +82,8 @@
 
         <route>
             <from uri="activemq:queue:iam.indambmon1.temperature"/>
-            <process>
-                <simple>
-                    <setBody>
-                        <simple>${bodyAs(java.lang.String)}</simple>
-                    </setBody>
-                    <setBody>
-                        <simple>${bodyAs(java.math.BigDecimal)}</simple>
-                    </setBody>
-                </simple>
-            </process>
-            <to uri="sql:INSERT INTO iam(ts, device, measurement, value) VALUES (now(), 'indambmon1', 'temperature', :#${body})?dataSource=#postgres-ds"/>
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
         </route>
 
         <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
