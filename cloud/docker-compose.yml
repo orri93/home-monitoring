@@ -21,6 +21,7 @@ services:
     ports:
       - "61616:61616"
       - "8161:8161"
+#     - "1883:1883"
     networks:
       - home-monitoring-net
     volumes:
@@ -35,11 +36,22 @@ services:
     depends_on:
       - db
 
+  grafana:
+    image: grafana/grafana:11.5.1
+    ports:
+      - "3000:3000"
+    networks:
+      - home-monitoring-net
+    volumes:
+      - grafana_data:/var/lib/grafana
+#     - ./grafana-conf:/etc/grafana/provisioning
+    depends_on:
+      - db
 
 volumes:
   db-data:
   activemq-data:
-  node-red-data:
+# node-red-data:
   grafana_data:
 
 networks:

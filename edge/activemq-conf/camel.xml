@@ -59,6 +59,16 @@
         </property>
     </bean>
 
+    <bean id="activemqc" class="org.apache.camel.component.jms.JmsComponent" >
+        <property name="connectionFactory">
+          <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+            <property name="brokerURL" value="tcp:/gosazure:61616"/>
+            <property name="userName" value="${activemq.username}"/>
+            <property name="password" value="${activemq.password}"/>
+          </bean>
+        </property>
+    </bean>
+
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
         <!-- Routes for the Indoor Ambient Monitoring Device #1 -->
@@ -68,6 +78,9 @@
         <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.cloud.indambmon1.humidity"/></route>
         <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.cloud.indambmon1.pressure"/></route>
         <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.cloud.indambmon1.temperature"/></route>
+        <route><from uri="activemq:queue:iam.cloud.indambmon1.humidity"/><to uri="activemqc:queue:iam.indambmon1.humidity"/></route>
+        <route><from uri="activemq:queue:iam.cloud.indambmon1.pressure"/><to uri="activemqc:queue:iam.indambmon1.pressure"/></route>
+        <route><from uri="activemq:queue:iam.cloud.indambmon1.temperature"/><to uri="activemqc:queue:iam.indambmon1.temperature"/></route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.humidity"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'humidity', ${body})</simple></setBody>
