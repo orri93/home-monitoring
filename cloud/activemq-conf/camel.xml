@@ -63,17 +63,17 @@
 
         <!-- Routes for the Indoor Ambient Monitoring Device #1 -->
         <route>
-            <from uri="activemq:queue:iam.indambmon1.humidity"/>
+            <from uri="activemq:queue:iam.indambmon1.humidity?transacted=true"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'humidity', ${body})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
         <route>
-            <from uri="activemq:queue:iam.indambmon1.pressure"/>
+            <from uri="activemq:queue:iam.indambmon1.pressure?transacted=true"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'pressure', ${body})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
         <route>
-            <from uri="activemq:queue:iam.indambmon1.temperature"/>
+            <from uri="activemq:queue:iam.indambmon1.temperature?transacted=true"/>
             <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
