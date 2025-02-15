@@ -62,6 +62,21 @@
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
         <!-- Routes for the Indoor Ambient Monitoring Device #1 -->
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.humidity"/>
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'humidity', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.pressure"/>
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'pressure', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon1.temperature"/>
+            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
 
     </camelContext>
 
