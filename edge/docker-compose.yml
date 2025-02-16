@@ -24,6 +24,8 @@ services:
       - "1883:1883"
     networks:
       - home-monitoring-net
+    extra_hosts:
+      - "gosazure:${GOSAZURE}"
     volumes:
       - ./activemq-conf/activemq.xml:/opt/apache-activemq/conf/activemq.xml
       - ./activemq-conf/camel.xml:/opt/apache-activemq/conf/camel.xml
