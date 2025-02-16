@@ -97,6 +97,25 @@
             <to uri="jdbc:postgres-ds"/>
         </route>
 
+        <!-- Developing route -->
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.temperature"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.dev.humidity"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.dev.humidity"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody>
+                <simple>INSERT INTO timestamp (timestamp, value) VALUES ('${body[ts]}', ${body[value]})</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.devb.humidity"/>
+        </route>
+
         <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
         <!-- route>
