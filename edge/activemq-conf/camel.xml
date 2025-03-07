@@ -72,49 +72,77 @@
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
         <!-- Routes for the Indoor Ambient Monitoring Device #1 -->
-        <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.indambmon1.humidity"/></route>
-        <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.indambmon1.pressure"/></route>
-        <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.indambmon1.temperature"/></route>
-        <route><from uri="activemq:topic:iam.indambmon1.humidity"/><to uri="activemq:queue:iam.cloud.indambmon1.humidity"/></route>
-        <route><from uri="activemq:topic:iam.indambmon1.pressure"/><to uri="activemq:queue:iam.cloud.indambmon1.pressure"/></route>
-        <route><from uri="activemq:topic:iam.indambmon1.temperature"/><to uri="activemq:queue:iam.cloud.indambmon1.temperature"/></route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.humidity"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.indambmon1.humidity"/>
+        </route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.pressure"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.indambmon1.pressure"/>
+        </route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.temperature"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.indambmon1.temperature"/>
+        </route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.humidity"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.cloud.indambmon1.humidity"/>
+        </route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.pressure"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.cloud.indambmon1.pressure"/>
+        </route>
+        <route>
+            <from uri="activemq:topic:iam.indambmon1.temperature"/>
+            <setBody>
+                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss.SSS}", "value": ${body}}</simple>
+            </setBody>
+            <to uri="activemq:queue:iam.cloud.indambmon1.temperature"/>
+        </route>
         <route><from uri="activemq:queue:iam.cloud.indambmon1.humidity?transacted=true"/><to uri="activemqc:queue:iam.indambmon1.humidity"/></route>
         <route><from uri="activemq:queue:iam.cloud.indambmon1.pressure?transacted=true"/><to uri="activemqc:queue:iam.indambmon1.pressure"/></route>
         <route><from uri="activemq:queue:iam.cloud.indambmon1.temperature?transacted=true"/><to uri="activemqc:queue:iam.indambmon1.temperature"/></route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.humidity?transacted=true"/>
-            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'humidity', ${body})</simple></setBody>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon1', 'humidity', ${body[value]})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.pressure?transacted=true"/>
-            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'pressure', ${body})</simple></setBody>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon1', 'pressure', ${body[value]})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
         <route>
             <from uri="activemq:queue:iam.indambmon1.temperature?transacted=true"/>
-            <setBody><simple>INSERT INTO iam VALUES (now(), 'indambmon1', 'temperature', ${body})</simple></setBody>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon1', 'temperature', ${body[value]})</simple></setBody>
             <to uri="jdbc:postgres-ds"/>
         </route>
 
         <!-- Developing route -->
-        <route>
-            <from uri="activemq:topic:iam.indambmon1.temperature"/>
-            <setBody>
-                <simple>{"ts": "${date:now:yyyy-MM-dd HH:mm:ss}", "value": ${body}}</simple>
-            </setBody>
-            <to uri="activemq:queue:iam.dev.humidity"/>
-        </route>
-        <route>
-            <from uri="activemq:queue:iam.dev.humidity"/>
-            <unmarshal>
-                <json library="Jackson"/>
-            </unmarshal>
-            <setBody>
-                <simple>INSERT INTO timestamp (timestamp, value) VALUES ('${body[ts]}', ${body[value]})</simple>
-            </setBody>
-            <to uri="activemq:queue:iam.devb.humidity"/>
-        </route>
 
         <!-- dataFormats><json id="jack" library="Jackson"/></dataFormats -->
 
