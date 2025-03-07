@@ -31,7 +31,10 @@ services:
       - ./activemq-lib/postgresql-42.2.14.jar:/opt/apache-activemq/lib/postgresql-42.2.14.jar
       - ./activemq-lib/camel/camel-sql-2.25.4.jar:/opt/apache-activemq/lib/camel/camel-sql-2.25.4.jar
       - ./activemq-lib/camel/camel-jdbc-2.25.4.jar:/opt/apache-activemq/lib/camel/camel-jdbc-2.25.4.jar
+      - ./activemq-lib/camel/camel-jackson-2.25.4.jar:/opt/apache-activemq/lib/camel/camel-jackson-2.25.4.jar
       - ./activemq-lib/optional/spring-jdbc-5.3.39.jar:/opt/apache-activemq/lib/optional/spring-jdbc-5.3.39.jar
+      - ./activemq-lib/optional/jackson-databind-2.9.10.7.jar:/opt/apache-activemq/lib/optional/jackson-databind-2.9.10.7.jar
+      - ./activemq-lib/optional/jackson-module-jaxb-annotations-2.9.10.jar:/opt/apache-activemq/lib/optional/jackson-module-jaxb-annotations-2.9.10.jar
       - activemq-data:/opt/apache-activemq/data
     depends_on:
       - db
