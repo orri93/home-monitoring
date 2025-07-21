@@ -87,9 +87,110 @@
             <to uri="jdbc:postgres-ds"/>
         </route>
 
+        <!-- Routes for the Indoor Ambient Monitoring Device #2 -->
+        <route>
+            <from uri="activemq:queue:iam.indambmon2.humidity?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon2', 'humidity', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon2.pressure?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon2', 'pressure', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon2.temperature?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon2', 'temperature', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+
+        <!-- Routes for the Indoor Ambient Monitoring Device #3 -->
+        <route>
+            <from uri="activemq:queue:iam.indambmon3.humidity?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon3', 'humidity', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon3.pressure?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon3', 'pressure', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon3.temperature?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon3', 'temperature', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+
+        <!-- Routes for the Indoor Ambient Monitoring Device #4 -->
+        <route>
+            <from uri="activemq:queue:iam.indambmon4.humidity?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon4', 'humidity', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon4.pressure?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon4', 'pressure', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon4.temperature?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon4', 'temperature', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        
+        <!-- Routes for the Indoor Ambient Monitoring Device #5 -->
+        <route>
+            <from uri="activemq:queue:iam.indambmon5.humidity?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon5', 'humidity', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon5.pressure?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon5', 'pressure', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+        <route>
+            <from uri="activemq:queue:iam.indambmon5.temperature?transacted=true"/>
+            <unmarshal>
+                <json library="Jackson"/>
+            </unmarshal>
+            <setBody><simple>INSERT INTO iam VALUES ('${body[ts]}', 'indambmon5', 'temperature', ${body[value]})</simple></setBody>
+            <to uri="jdbc:postgres-ds"/>
+        </route>
+
     </camelContext>
 
-
-
 </beans>
-
